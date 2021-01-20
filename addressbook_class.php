@@ -90,7 +90,7 @@
 				);
 			$this->addToNewHostsFile($domain,$b64);
 			$url="http://$domain/?i2paddresshelper=$b64";
-			$this->getFileThoughProxy($url);
+			$this->getFileThoughProxy($url, I2PHTTPPROXY);
 			return $res;
 		}
 		/*public function b64to32($str){ // not works
