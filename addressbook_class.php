@@ -89,6 +89,8 @@
 					$sql
 				);
 			$this->addToNewHostsFile($domain,$b64);
+			$url="http://$domain/?i2paddresshelper=$b64";
+			$this->getFileThoughProxy($url);
 			return $res;
 		}
 		/*public function b64to32($str){ // not works
@@ -135,7 +137,7 @@
 		}
 
 		//subdomain support
-		protected function getFileThoughProxy($url,$proxy){
+		protected function getFileThoughProxy($url,$proxy='tcp://127.0.0.1:4444'){
 			$aContext = array(
 			    'http' => array(
 				'proxy'           => $proxy,
