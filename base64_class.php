@@ -48,7 +48,7 @@ class b32_b64 {
   }
 
 
-      public function isValidBase64(string $data): bool
+      public static function isValidBase64(string $data): bool
       {
         $len = strlen($data);
      

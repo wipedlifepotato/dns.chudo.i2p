@@ -1,4 +1,5 @@
 <?php
+	require_once("base64_class.php");
 	function generateRandomString($len = 10, $alphabet="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") {
             srand(time());
 	    $ret="";
@@ -101,7 +102,7 @@
 			return $tmp;
 		}*/
 		protected function checkIsB64($str){
-			if (base64_decode($str, false)) return true;
+			if (b32_b64::isValidBase64($str)) return true;
 			return false;
 		}
 		public function addFromHostFile($hosts){
@@ -179,6 +180,7 @@
 					throw new Exception("You will create file on $url");
 				}else{
 					$this->addDomain($domain,$b64,$description);
+					$this->deleteTmpFilesForDomain($host);
 					return true;
 				}//reg subdomain domain
 			}else{
