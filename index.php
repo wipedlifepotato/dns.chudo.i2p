@@ -4,6 +4,7 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 	include('config.php');
+	require_once("base64_class.php");
 	if(!USEMYSQL)
 		require_once('addressbook_class.php');
 	else
@@ -21,8 +22,9 @@ error_reporting(E_ALL);
 			$host=$value['host'];
 			$b64=$value['b64'];
 			$desc=$value['description'];
+			$b32 = (new b32_b64())->b32from64($b64) . ".b32.i2p";
 			if( !strlen($desc) ) $desc = "no info";
-			echo "<a href='http://$host/?i2paddresshelper=$b64'>$host</a> - $desc <hr/>";
+			echo "<a href='http://$host/?i2paddresshelper=$b64'>$host</a> - $desc  <br/>($b32)<hr/>";
 		}//foreach
 		echo "<a href=?>back</a>";
 		exit;
@@ -68,3 +70,5 @@ Add Domain(http://127.0.0.1:7070/?page=i2p_tunnels):
 	<input type=submit value="add domain" />
 </form>
 </center>
+<p>Source code on <a href='https://github.com/wipedlifepotato/dns.chudo.i2p'>github</a></p>
+<p><a href='hosts.txt'>hosts</a>|<a href='new-hosts.txt'>new-hosts</a></p>
