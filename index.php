@@ -5,6 +5,7 @@ ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 	include('config.php');
 	require_once("base64_class.php");
+	include("sam.php");
 	if(!USEMYSQL)
 		require_once('addressbook_class.php');
 	else
@@ -18,13 +19,21 @@ error_reporting(E_ALL);
 	//search domain
 	if ( isset($_GET['d']) ){
 		$domains=$test->getDomain($_GET['d']);
+		$co=false;
+		if ( isset($_GET['check_online']) && $_GET['check_online'] == 'y') $co=true;
+		$sam=null;
+		if($co)
+			$sam = new SAM();
 		foreach( $domains as $value){
 			$host=$value['host'];
 			$b64=$value['b64'];
 			$desc=$value['description'];
 			$b32 = (new b32_b64())->b32from64($b64) . ".b32.i2p";
+			$online="";
+			if($co)
+				$online = $sam->check_online("$b32") ? "*Is online*" : "*Is down*";
 			if( !strlen($desc) ) $desc = "no info";
-			echo "<a href='http://$host/?i2paddresshelper=$b64'>$host</a> - $desc  <br/>($b32)<hr/>";
+			echo "<a href='http://$host/?i2paddresshelper=$b64'>$host $online</a> - $desc  <br/>($b32)<hr/>";
 		}//foreach
 		echo "<a href=?>back</a>";
 		exit;
@@ -60,6 +69,7 @@ error_reporting(E_ALL);
 ?>
 <form action=index.php method=GET> <!-- search -->
 	jump: <input type=textarea name=d placeholder="domain for jump"/>
+	<br/>Check online (not 100%): <input type=checkbox name=check_online value='y' /><br/>
 	<input type=submit value='search' />
 </form><br/><hr/>
 Add Domain(http://127.0.0.1:7070/?page=i2p_tunnels):
