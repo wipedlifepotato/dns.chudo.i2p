@@ -30,12 +30,12 @@ function request(){
 				if($co){
 					$cache=$test->existOnlineStatus($host);
 					if( $cache === false){// if not exist online status in 'cache'
-						if( $sam == null) $sam = new SAM();
+						if( $sam == null) $sam = new SAM(SAMHOST,SAMPORT);
 						$online = $sam->check_online("$b32");
 						$test->addOnlineStatus($host,$online);
 					}else{// if exists in 'cache'
 						if( $test->diffRequestAndOnlineStatus($host) ){ // '>5 minutes ago checked'
-							if( $sam == null) $sam = new SAM();
+							if( $sam == null) $sam = new SAM(SAMHOST,SAMPORT);
 							print("<!-- >5minutes -->");
 							$online = $sam->check_online("$b32");
 							$test->UpdateOnlineStatusIfNeed($host,$online);

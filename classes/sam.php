@@ -47,6 +47,7 @@ class SAM{
 			$this->main_socket=$socket;
 			$this->session_init();
 		}
+	
 		public function __destruct(){
 			socket_close($this->main_socket);
 		}
