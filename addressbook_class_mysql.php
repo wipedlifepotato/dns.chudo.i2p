@@ -63,6 +63,7 @@
 			return false;
 		}
 		protected function is_valid_domain_name($domain_name) { 
+		   if( strlen($domain_name) < 4) return false;// n.i2p
 		   // https://www.tutorialspoint.com/how-to-validate-domain-name-in-php
 		   $tmp= (preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $domain_name) //valid chars check
             && preg_match("/^.{1,253}$/", $domain_name) //overall length check
@@ -99,6 +100,7 @@
 			return $tmp;
 		}*/
 		protected function checkIsB64($str){
+			if( strlen($str) == 0 ) return false;
 			if (b32_b64::isValidBase64($str)) return true;
 			return false;
 		}

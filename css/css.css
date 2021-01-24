@@ -1,0 +1,51 @@
+html{
+	    background-color: rgb(29,8,71);
+	    background-color: linear-gradient(90deg, rgba(29,8,71,1) 0%, rgba(12,8,61,1) 26%, rgba(8,17,64,1) 40%, rgba(23,4,46,1) 57%, rgba(8,25,64,1) 85%, rgba(3,9,34,1) 100%);
+	    color: #7aff7a;
+	    text-transform:uppercase;
+}
+
+a:visited{
+	color:cyan;
+}
+a:link{
+	color:green;
+}
+#radiation{
+    width: 210px;
+    height: 280px;
+    background-image: url(radiation.png);
+    background-size: cover;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+#uroboros{
+	width:120px;
+	height:120px;
+	background-image:url('uroboros.png');
+	background-size:cover;
+	position:absolute;
+	right:0;
+	bottom:0;
+
+}
+#dns{
+	letter-spacing:1.2em;
+	font-size:2em;
+	text-align:center;
+	margin-bottom:4em;
+}
+#forms{
+	text-align:center;
+}
+input{
+	box-sizing: border-box;
+	
+}
+input[type='textarea']{
+	height:2em;
+}
+form ul{
+	list-style:none;
+}

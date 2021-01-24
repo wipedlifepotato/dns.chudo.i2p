@@ -1,4 +1,5 @@
 <?php
+	define("BRANDNAME", "DNS.CHUDO.I2P");
 	define("DB_HOST", "localhost");
 //	define("USEMYSQL", TRUE); // deprecated, can be found in old commits
 		//not need for sqlite
