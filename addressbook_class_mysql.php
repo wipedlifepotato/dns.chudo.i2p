@@ -185,5 +185,62 @@
 				return $host.'/'.$tmpString;
 			}//file not exists already
 		}//mainFunc
+/*
++--------------+--------------+------+-----+---------------------+-------+
+| Field        | Type         | Null | Key | Default             | Extra |
++--------------+--------------+------+-----+---------------------+-------+
+| domain       | varchar(255) | YES  |     | NULL                |       |
+| status       | tinyint(1)   | YES  |     | NULL                |       |
+| last_request | time         | YES  |     | current_timestamp() |       |
+| last_online  | time         | YES  |     | current_timestamp() |       |
++--------------+--------------+------+-----+---------------------+-------+
+*/
+		//cache online
+		public function addOnlineStatus($domain, $online){
+			$domain = $this->escapeString($domain);
+			if($online)$online=1;
+			else $online=0;
+			//insert into cache_online(domain,status) values('piska.i2p','1');
+			$res=$this->db->query("insert into cache_online(domain,status) values('$domain','$online');");
+			return $res;
+		}
+		public function UpdateOnlineStatus($domain, $online){
+			$domain = $this->escapeString($domain);
+			if($online)$online=1;
+			else $online=0;
+			$lr="";
+			if($online) $lr = ",last_online=NOW()";
+			$res=$this->db->query("update cache_online set status='$online',
+				  last_request=NOW() $lr where domain='$domain'");
+			return $res;
+		}
+		public function existOnlineStatus($domain){
+			$domain = $this->escapeString($domain);
+			$res=$this->db->query("SELECT * FROM cache_online WHERE domain='$domain'");
+			$row = $res->fetch_array();
+			if ($row) 
+				return $row;
+			return false;
+		}
+		public function diffRequestAndOnlineStatus($domain,$timetoupdate=5){
+				$exonl=$this->existOnlineStatus($domain);
+				if($exonl !== false){
+					$nowtime=strtotime("now");
+					$lasttime = strtotime( $exonl['last_request'] );
+					$minutes=round(abs($nowtime - $lasttime) / 60,2);
+					if($minutes>$timetoupdate) return true;
+					return false;
+				}
+				throw new Exception("Not found domain in status cache");
+		}
+		public function UpdateOnlineStatusIfNeed($domain,$online){
+			try{
+				if($this->diffRequestAndOnlineStatus($domain))
+					$this->UpdateOnlineStatus($domain,$online);
+			}catch(Exception $e){
+				$this->addOnlineStatus($domain,$online);
+			}
+		}//
+
 	};
 ?>
