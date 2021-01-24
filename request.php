@@ -1,12 +1,13 @@
+<?php include('templates/header.php');?>
 <?php
 function request(){
 		ini_set('display_errors', '1');
 		ini_set('display_startup_errors', '1');
 		error_reporting(E_ALL);
 
-		require_once("base64_class.php");
-		include("sam.php");
-		require_once('addressbook_class_mysql.php');
+		require_once("classes/base64_class.php");
+		include("classes/sam.php");
+		require_once('classes/addressbook_class_mysql.php');
 
 
 		$test = new addressbook_service();
@@ -15,6 +16,7 @@ function request(){
 
 		//search domain
 		if ( isset($_GET['d']) ){
+			echo "<div id='domains'>";
 			$domains=$test->getDomain($_GET['d']);
 			$co=false;
 			if ( isset($_GET['check_online']) && $_GET['check_online'] == 'y') $co=true;
@@ -46,13 +48,14 @@ function request(){
 				if( !strlen($desc) ) $desc = "no info";
 				echo "<a href='http://$host/?i2paddresshelper=$b64'>$host $online</a> - $desc  <br/>($b32)<hr/>";
 			}//foreach
-			echo "<a href=?>back</a>";
+			echo "<a href=index.php>back</a>";
+			echo "</div>";
 			exit;
 		}
 
 		//add domain
 		if( isset_all($_GET, 'host','b64','desc') ){
-			echo "<a href=?>back</a><br/>";
+			echo "<center><a href=index.php>back</a><br/>";
 			$host=$_GET['host'];
 			$b64=$_GET['b64'];
 			$desc=$_GET['desc'];
@@ -74,7 +77,10 @@ function request(){
 					exit;
 				}
 			}
-			echo "Added!<hr/>";
+			echo "Added!<hr/></center>";
 		}
 }
+
+request();
 ?>
+<?php include('templates/footer.php');?>

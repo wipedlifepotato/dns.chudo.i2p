@@ -1,23 +1,6 @@
-<?php include('config.php'); ?>
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title><?php echo BRANDNAME; ?></title>
-		<meta charset=utf-8>
-		<link rel="stylesheet" href="css/css.css">
-	</head>
-<body>
-	<header>
-		<div id='dns'><?php echo BRANDNAME; ?></div>
-		<div id='uroboros'></div>
-		<div id='radiation'></div>
-	</header>
+<?php include('templates/header.php');?>
 	<div id='forms'>
-			<?php
-				include('request.php');
-				request();
-			?>
-			<form action=index.php method=GET> <!-- search -->
+			<form action=request.php method=GET> <!-- search -->
 			  <fieldset>
     				<legend>Search Domain/Jump:</legend>
 				<ul>
@@ -29,7 +12,7 @@
 			  </fieldset>
 			</form>
 <!-- -->
-			<form action=index.php method=GET> <!-- add domain -->
+			<form action=request.php method=GET> <!-- add domain -->
 			  <fieldset>
     				<legend>Add Domain:</legend>
 				<ul>
@@ -41,9 +24,4 @@
 			  </fieldset>
 			</form>
 	</div>
-	<footer>
-		<p>Source code on <a href='https://github.com/wipedlifepotato/dns.chudo.i2p'>github</a></p>
-		<p><a href='hosts.txt'>hosts</a>|<a href='new-hosts.txt'>new-hosts</a></p>
-	</footer>
-</body>
-</html>
+<?php include('templates/footer.php');?>

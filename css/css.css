@@ -49,3 +49,6 @@ input[type='textarea']{
 form ul{
 	list-style:none;
 }
+#domains{
+	text-align:center;
+}
