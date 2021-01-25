@@ -52,7 +52,8 @@ function request(){
 				}//end if check online
 				
 				if( !strlen($desc) ) $desc = "no info";
-				echo "<a href='http://$host/?i2paddresshelper=$b64'>$host (Last seen: $last_online)</a> - $desc  <br/>($b32)<hr/>";
+				$last_online = $co ? "(Last seen: $last_online)": "";
+				echo "<a href='http://$host/?i2paddresshelper=$b64'>$host $last_online</a> - $desc  <br/>($b32)<hr/>";
 			}//foreach
 			echo "<a href=index.php>back</a>";
 			echo "</div>";
