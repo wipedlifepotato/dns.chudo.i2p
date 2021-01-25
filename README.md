@@ -14,3 +14,9 @@ mysql -u root -p... < contrib/sql.sql
 ```
 then install apache2/nginx etc... with php (TODO: depencies list)
 and put the files in virtual directory of webserver
+
+## List of heroes
+* lialh4 aka wipedlife 
+* dr|z3d
+* orignal
+* R4SAS
