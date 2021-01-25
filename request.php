@@ -50,7 +50,7 @@ function request(){
 			}//foreach
 			echo "<a href=index.php>back</a>";
 			echo "</div>";
-			exit;
+			return true;
 		}
 
 		//add domain
@@ -74,7 +74,7 @@ function request(){
 					$test->addDomain($host,$b64,$desc);
 				}catch (Exception $e){
 					echo "".$e->getMessage();
-					exit;
+					return true;
 				}
 			}
 			echo "Added!<hr/></center>";
@@ -83,4 +83,5 @@ function request(){
 
 request();
 ?>
+
 <?php include('templates/footer.php');?>
