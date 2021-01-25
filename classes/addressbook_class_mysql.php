@@ -203,7 +203,9 @@
 			if($online)$online=1;
 			else $online=0;
 			//insert into cache_online(domain,status) values('piska.i2p','1');
-			$res=$this->db->query("insert into cache_online(domain,status) values('$domain','$online');");
+			$lr="'0000-00-00 00:00:00'";
+			if($online) $lr = "NOW()";
+			$res=$this->db->query("insert into cache_online(domain,status,last_online) values('$domain','$online',$lr);");
 			return $res;
 		}
 		public function UpdateOnlineStatus($domain, $online){

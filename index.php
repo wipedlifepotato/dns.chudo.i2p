@@ -4,11 +4,14 @@
 			  <fieldset>
     				<legend>Search Domain/Jump:</legend>
 				<ul>
-					<li>jump: <input type=textarea name=d placeholder="domain for jump"/></li>
-					<li>Check online (not 100% [in last 5 minutes]): 
+					<li><input type=textarea name=d placeholder="example.i2p"/></li>
+					<li><input type=submit value='search' /></li></br>
+					<li>Last seen[not 100%]: 
 					<input type=checkbox name=check_online value='y' /><li/>
-					<li><input type=submit value='search' /></li>
 				</ul>
+				<div style="float:right; font-size:0.5em" class=''>
+					"last seen" would show a value for last 5 minutes, even if a new request came later
+				</div>
 			  </fieldset>
 			</form>
 <!-- -->

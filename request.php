@@ -26,27 +26,33 @@ function request(){
 				$b64=$value['b64'];
 				$desc=$value['description'];
 				$b32 = (new b32_b64())->b32from64($b64) . ".b32.i2p";
-				$online="";
+				$last_online="";//last_online
 				if($co){
 					$cache=$test->existOnlineStatus($host);
 					if( $cache === false){// if not exist online status in 'cache'
 						if( $sam == null) $sam = new SAM(SAMHOST,SAMPORT);
-						$online = $sam->check_online("$b32");
+						$online = $sam->check_online("$b64");
 						$test->addOnlineStatus($host,$online);
+						if($online)
+							$last_online="now: ".date("F j, Y, g:i a");
+						else $last_online="NaN";
 					}else{// if exists in 'cache'
 						if( $test->diffRequestAndOnlineStatus($host) ){ // '>5 minutes ago checked'
-							if( $sam == null) $sam = new SAM(SAMHOST,SAMPORT);
-							print("<!-- >5minutes -->");
-							$online = $sam->check_online("$b32");
+							if( $sam == null ) $sam = new SAM(SAMHOST,SAMPORT);
+							//print("<!-- >5minutes -->");
+							$online = $sam->check_online("$b64");
 							$test->UpdateOnlineStatusIfNeed($host,$online);
+							if($online)
+								$last_online="now: ".date("F j, Y, g:i a");
+							else 	$last_online= $cache['last_online'];
 						}else//get from DB
-							$online= $cache['status']>0?true:false;
+							$last_online= $cache['last_online'];
 					}//end of exist in cache
-					$online = $online? "(*Is up*)" : "(*Is down*)";
+
 				}//end if check online
 				
 				if( !strlen($desc) ) $desc = "no info";
-				echo "<a href='http://$host/?i2paddresshelper=$b64'>$host $online</a> - $desc  <br/>($b32)<hr/>";
+				echo "<a href='http://$host/?i2paddresshelper=$b64'>$host (Last seen: $last_online)</a> - $desc  <br/>($b32)<hr/>";
 			}//foreach
 			echo "<a href=index.php>back</a>";
 			echo "</div>";
