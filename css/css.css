@@ -1,54 +1,108 @@
-html{
-	    background-color: rgb(29,8,71);
-	    background-color: linear-gradient(90deg, rgba(29,8,71,1) 0%, rgba(12,8,61,1) 26%, rgba(8,17,64,1) 40%, rgba(23,4,46,1) 57%, rgba(8,25,64,1) 85%, rgba(3,9,34,1) 100%);
-	    color: #7aff7a;
-	    text-transform:uppercase;
+html {
+  margin: 5% 10%;
+  color: #ddf;
+  background-color: rgb(29,8,71);
+  background-color: linear-gradient(90deg, rgba(29,8,71,1) 0%, rgba(12,8,61,1) 26%, rgba(8,17,64,1) 40%, rgba(23,4,46,1) 57%, rgba(8,25,64,1) 85%, rgba(3,9,34,1) 100%);
 }
 
-a:visited{
-	color:cyan;
+body {
+  font-size: 12pt;
+  font-family: Open Sans, Ubuntu Sans, Segoe UI, sans-serif;
 }
-a:link{
-	color:green;
-}
-#radiation{
-    width: 210px;
-    height: 280px;
-    background-image: url(radiation.png);
-    background-size: cover;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-#uroboros{
-	width:120px;
-	height:120px;
-	background-image:url('uroboros.png');
-	background-size:cover;
-	position:absolute;
-	right:0;
-	bottom:0;
 
+a:link {
+  color:#b0b;
+  text-decoration: none;
 }
-#dns{
-	letter-spacing:1.2em;
-	font-size:2em;
-	text-align:center;
-	margin-bottom:4em;
+a:visited {
+  color:#909;
 }
-#forms{
-	text-align:center;
+#dns {
+  margin-bottom:6%;
+  letter-spacing:.3em;
+  text-align:center;
+  font-size:300%;
+  font-weight: 900;
 }
-input{
-	box-sizing: border-box;
-	
+fieldset, legend {
+  border: 1px solid #424;
+  background: linear-gradient(to bottom, #536, #435);
 }
-input[type='textarea']{
-	height:2em;
+fieldset {
+  margin-top: 4%;
 }
-form ul{
-	list-style:none;
+legend {
+  margin: -13px 0 0 -13px;
+  padding: 2px 8px;
+  min-width: 200px;
 }
-#domains{
-	text-align:center;
+footer {
+  margin: -1px 2px 2px;
+  padding: 5px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  font-size: 80%;
+  border-top: 1px solid #424;
+  background: #213;
+}
+footer p {
+  margin: 2px;
+  padding: 0;
+}
+#radiation {
+  width: 210px;
+  height: 280px;
+  background-image: url(radiation.png);
+  background-size: cover;
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+}
+#uroboros {
+  width:120px;
+  height:120px;
+  background-image:url('uroboros.png');
+  background-size:cover;
+  position:absolute;
+  right:0;
+  bottom:50px;
+}
+#forms {
+  text-align:center;
+}
+input {
+  box-sizing: border-box;
+}
+input[type="textarea"] {
+  margin: 0 4px;
+  height:2em;
+  border: 1px solid #949;
+  background: #fdf;
+}
+input[type="textarea"]:focus {
+  background: #fef;
+}
+input[type="submit"], input[type="reset"] {
+  margin: 0 4px;
+  padding: 4px 8px;
+  min-width: 100px;
+  font-weight: 600;
+  border: 1px solid #949;
+  border-radius: 3px;
+  background: #fef;
+}
+form ul {
+  list-style:none;
+  font-weight: 600;
+}
+form li {
+  line-height: 2.5;
+  display: inline-block;
+  text-transform: capitalize;
+}
+#domains {
+  text-align:center;
 }
