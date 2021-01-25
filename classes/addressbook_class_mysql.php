@@ -48,6 +48,16 @@
 			    return true;
 			return false;
 		}
+		public function getDomains($a=0,$b=15){
+			$a = intval($a);
+			$b = intval($b);
+			$results = $this->db->query("SELECT * FROM domains LIMIT $a,$b");
+			$ret=array();
+			while ($row = $results->fetch_array()) {
+			    $ret[] = $row;
+			}
+			return $ret;
+		}
 		public function getDomain($domain){
 			
 			$domain = $this->escapeString($domain);
