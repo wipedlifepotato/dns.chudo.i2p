@@ -9,6 +9,6 @@
 <body>
 	<header>
 		<div id='dns'><?php echo BRANDNAME; ?></div>
-		<div id='uroboros'></div>
-		<div id='radiation'></div>
+		<!--<div id='uroboros'></div>
+		<div id='radiation'></div>-->
 	</header>
