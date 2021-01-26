@@ -48,10 +48,11 @@
 			    return true;
 			return false;
 		}
-		public function getDomains($a=0,$b=15){
+		public function getDomains($a=0,$b=15,$status=0){
 			$a = intval($a);
 			$b = intval($b);
-			$results = $this->db->query("SELECT * FROM domains LIMIT $a,$b");
+			$status=intval($status);
+			$results = $this->db->query("select * from domains as d, cache_online as cache where cache.domain=d.host and status='$status' LIMIT $a,$b");
 			$ret=array();
 			while ($row = $results->fetch_array()) {
 			    $ret[] = $row;

@@ -10,10 +10,14 @@ function request(){
 		require_once('classes/addressbook_class_mysql.php');
 		$addressbook = new addressbook_service();
 		$offset=0;
+		$status = 1;
 		if( isset($_GET['o']) ){
 			$offset = intval($_GET['o']);
+		}if (isset($_GET['status']) ){
+			$status = intval($_GET['status']);
 		}
-		$domains=$addressbook->getDomains($offset, 5);
+		
+		$domains=$addressbook->getDomains($offset, 5,$status);
 		echo "<div id='domains'>";
 		foreach( $domains as $value){
 		 $host=$value['host'];
@@ -27,8 +31,11 @@ function request(){
 		}//foreach
 		$np=$offset+5;
 		$bp=$offset-5;
-		if($offset) print( "<a href='?o=$bp'>&lt;</a>" );
-		echo "<a href='?o=$np'>&gt;</a><hr/><a href=index.php>main page</a>";
+		if($offset) print( "<a href='?o=$bp&status=$status'>&lt;</a>" );
+
+		echo "<a href='?o=$np&status=$status'>&gt;</a><hr/><a href=index.php>main page</a>";
+		echo "|<a href=?status=1>online only</a>";
+		echo "|<a href=?status=0>offline only</a>";
 		echo "</div>";
 		return true;
 	}
