@@ -67,13 +67,22 @@ class SAM{
 			}
 			return $reply;
 		}
+		public function getLastPing(){
+			return $this->ping;
+		}
 		public function stream_connect($destination){
+					
+					
+					
 			$tmp=socket_create(AF_INET, SOCK_STREAM,SOL_TCP);
 			$this->conn_to_sam($tmp);
 			$this->write_hello($tmp);
 			$this->swrite($tmp,
 				"STREAM CONNECT ID=".$this->idname." DESTINATION=$destination\r\n");
+			$nowtime=strtotime("now");
 			$reply=$this->sread($tmp);
+			$lasttime = strtotime( "now" );
+			$this->ping=round(abs($nowtime - $lasttime),2);
 			socket_close($tmp);
 			if( strstr($reply, "RESULT=OK") === FALSE)
 				throw new Exception( $reply );

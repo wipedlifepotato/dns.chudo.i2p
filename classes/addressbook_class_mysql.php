@@ -52,7 +52,7 @@
 			$a = intval($a);
 			$b = intval($b);
 			$status=intval($status);
-			$results = $this->db->query("select * from domains as d, cache_online as cache where cache.domain=d.host and status='$status' LIMIT $a,$b");
+			$results = $this->db->query("select DISTINCT * from domains as d, cache_online as cache where cache.domain=d.host and status='$status' LIMIT $a,$b");
 			$ret=array();
 			while ($row = $results->fetch_array()) {
 			    $ret[] = $row;
@@ -119,9 +119,21 @@
 			$lines= explode("\n",$full);
 			//echo $lines[0];
 			foreach ($lines as $line){
+				//print("FULL TEXT: $full\r\n");
 				$tmp = explode("=", $line,2);
-				if($tmp[0] == "" or $tmp[1]=="") continue;
 				//echo $tmp[0]." ... ".$tmp[1];
+				if( sizeof($tmp) < 2 ) {
+					print("WARNING: size domain line\r\n");
+					var_dump($tmp);
+					print("~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n");
+					continue;
+				}
+				$tmp1 = explode("#", $tmp[1],2);
+				if( sizeof($tmp1) ){
+					$tmp[1] = $tmp1[0]; //delete signature; ToDo: add signaturing?
+				}
+				if($tmp[0] == "" or $tmp[1]=="") continue;
+
 				try{
 					print("Add ".$tmp[0]." domain with base64 ".$tmp[1]."\r\n\r\n");
 					$this->addDomain($tmp[0],$tmp[1],"");
@@ -263,7 +275,9 @@
 				if($this->diffRequestAndOnlineStatus($domain))
 					$this->UpdateOnlineStatus($domain,$online);
 			}catch(Exception $e){
-				$this->addOnlineStatus($domain,$online);
+				print("Exception $e");
+				if($e == "Not found domain in status cache")
+					$this->addOnlineStatus($domain,$online);
 			}
 		}//
 
