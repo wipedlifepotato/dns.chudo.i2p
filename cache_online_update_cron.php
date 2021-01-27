@@ -11,6 +11,17 @@
 		require_once('classes/addressbook_class_mysql.php');
 		$addressbook = new addressbook_service();
 		$domains=$addressbook->getDomain("");
+		$hosts=array(
+			"http://stats.i2p/cgi-bin/newhosts.txt",//
+			"http://notbob.i2p/hosts.txt"
+		);
+
+		foreach($hosts as $host){
+			print("Download $host\n");
+			$file = $addressbook->getFileThoughProxy("$host",I2PHTTPPROXY,false);
+			$addressbook->addDomainsByText($file);
+		}
+		print("\r\n\r\nUpdate domains cache\r\n\r\n");
 		$sam = null;
 		foreach( $domains as $value){
 				$host=$value['host'];

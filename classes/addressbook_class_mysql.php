@@ -115,6 +115,19 @@
 			if (b32_b64::isValidBase64($str)) return true;
 			return false;
 		}
+		public function addDomainsByText($full){ 
+			$lines= explode("\n",$full);
+			//echo $lines[0];
+			foreach ($lines as $line){
+				$tmp = explode("=", $line,2);
+				if($tmp[0] == "" or $tmp[1]=="") continue;
+				//echo $tmp[0]." ... ".$tmp[1];
+				try{
+					print("Add ".$tmp[0]." domain with base64 ".$tmp[1]."\r\n\r\n");
+					$this->addDomain($tmp[0],$tmp[1],"");
+				}catch(Exception $e){print ("Warning: ".$e."</br>\n");}
+			}	
+		}
 		public function addFromHostFile($hosts){
 			$f = fopen($hosts,"r");
 			$full="";
@@ -122,15 +135,7 @@
 				$full.= $text;
 			}
 			fclose($f);
-			$lines= explode("\n",$full);
-			//echo $lines[0];
-			foreach ($lines as $line){
-				$tmp = explode("=", $line,2);
-				//echo $tmp[0]." ... ".$tmp[1];
-				try{
-					$this->addDomain($tmp[0],$tmp[1],"");
-				}catch(Exception $e){print ("Warning: ".$e."</br>\n");}
-			}
+			$this->addDomainsByText($full);
 		}
 		protected function addToNewHostsFile($domain,$b64,$fn='new-hosts.txt'){
 			$data = $domain.'='.$b64.PHP_EOL;
@@ -148,16 +153,21 @@
 		}
 
 		//subdomain support
-		protected function getFileThoughProxy($url,$proxy='tcp://127.0.0.1:4444'){
+		public function getFileThoughProxy($url,$proxy='tcp://127.0.0.1:4444', $j=true){
+			//MYOB/6.66 (AN/ON)
 			$aContext = array(
 			    'http' => array(
 				'proxy'           => $proxy,
 				'request_fulluri' => true,
-				'header'          => "Proxy-Authorization: Basic",
+				'header'          => "Proxy-Authorization: Basic\r\n".
+				" Accept-language: en\r\n" .
+             			 "User-Agent: MYOB/6.66 (AN/ON)\r\n" // 
 			    ),
 			);
 			$cxContext = stream_context_create($aContext);
-			return @file_get_contents("$url", False, $cxContext);
+			if($j)
+				return @file_get_contents("$url", False, $cxContext);
+			return file_get_contents("$url", False, $cxContext);
 		}//	
 		protected function genTmpFileForDomain($host){
 			$host = $this->escapeString($host);

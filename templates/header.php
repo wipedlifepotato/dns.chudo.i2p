@@ -5,6 +5,7 @@
 		<title><?php echo BRANDNAME; ?></title>
 		<meta charset=utf-8>
 		<link rel="stylesheet" href="css/css.css">
+		<meta http-equiv="Content-Security-Policy" content="script-src 'none'">
 	</head>
 <body>
 	<header>
