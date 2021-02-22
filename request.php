@@ -17,7 +17,10 @@ function request(){
 		//search domain
 		if ( isset($_GET['d']) ){
 			echo "<div id='domains'>";
-			$domains=$test->getDomain($_GET['d']);
+			$alldomains=true;
+			if( isset($_GET['all_domains']) && $_GET['all_domains'] == 'y') $alldomains=false;
+			//print($alldomains?"true":'false');
+			$domains= $alldomains ? $test->getDomain($_GET['d'],true) : $test->getDomain($_GET['d']);
 			$co=false;
 			if ( isset($_GET['check_online']) && $_GET['check_online'] == 'y') $co=true;
 			$sam=null;
@@ -51,9 +54,9 @@ function request(){
 
 				}//end if check online
 				
-				if( !strlen($desc) ) $desc = "no info";
+				if( strlen($desc) ) $desc = "-".$desc;
 				$last_online = $co ? "(Last seen: $last_online)": "";
-				echo "<a href='http://$host/?i2paddresshelper=$b64'>$host $last_online</a> - $desc  <br/>($b32)<hr/>";
+				echo "<a href='http://$host/?i2paddresshelper=$b64'>$host $last_online</a> $desc  <br/>($b32)<hr/>";
 			}//foreach
 			echo "<a href=index.php>back</a>";
 			echo "</div>";
@@ -62,10 +65,15 @@ function request(){
 
 		//add domain
 		if( isset_all($_GET, 'host','b64','desc') ){
-			echo "<center><a href=index.php>back</a><br/>";
 			$host=$_GET['host'];
 			$b64=$_GET['b64'];
 			$desc=$_GET['desc'];
+			echo "<center><a href=index.php>back</a><br/>";
+			if(!$test->checkIsB64($b64))die("uncorrect b64");
+			$sam = new SAM(SAMHOST,SAMPORT);
+			$online = $sam->check_online("$b64");
+			if(!$online)die("your service is down!");
+		
 			if( $test->isSubDomain($host) ){
 				try{
 					$res=$test->regSubDomain($host,$b64,$desc,I2PHTTPPROXY);

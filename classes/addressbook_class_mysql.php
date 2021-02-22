@@ -48,6 +48,10 @@
 			    return true;
 			return false;
 		}
+		public function getCountDomains(){
+			$result = $this->db->query('SELECT COUNT(*) from domains;');
+			return $result->fetch_array()[0];
+		}
 		public function getDomains($a=0,$b=15,$status=0){
 			$a = intval($a);
 			$b = intval($b);
@@ -59,14 +63,25 @@
 			}
 			return $ret;
 		}
-		public function getDomain($domain){
-			
+		public function deleteUnusedDomains(){
+			$query="DELETE d FROM domains d
+			LEFT JOIN cache_online cache ON cache.domain = d.host 
+			WHERE cache.last_online < NOW() - INTERVAL 31 DAY";
+			$this->db->query($query);
+		}
+		public function getDomain($domain,$onlyonline=false){			
 			$domain = $this->escapeString($domain);
-			$results = $this->db->query("SELECT * FROM domains where host LIKE '%$domain%'");
+			//print("select DISTINCT * from domains as d, cache_online as cache where cache.domain=d.host and d.host LIKE '%$domain%' and cache.last_online!='0000-00-00 00:00:00';");
+			$results = ($onlyonline ? 
+			$this->db->query(
+			"select DISTINCT * from domains as d, cache_online as cache where cache.domain=d.host and d.host LIKE '%$domain%' and cache.last_online > NOW() - INTERVAL 31 DAY"
+			) :
+			$this->db->query("SELECT * FROM domains where host LIKE '%$domain%'"));
 			$ret=array();
 			while ($row = $results->fetch_array()) {
 			    $ret[] = $row;
 			}
+
 			return $ret;
 		}
 		public function isSubDomain($domain){
@@ -110,7 +125,7 @@
 			$tmp = $base32->encode($tmp);
 			return $tmp;
 		}*/
-		protected function checkIsB64($str){
+		public function checkIsB64($str){
 			if( strlen($str) == 0 ) return false;
 			if (b32_b64::isValidBase64($str)) return true;
 			return false;
@@ -149,7 +164,7 @@
 			fclose($f);
 			$this->addDomainsByText($full);
 		}
-		protected function addToNewHostsFile($domain,$b64,$fn='new-hosts.txt'){
+		public function addToNewHostsFile($domain,$b64,$fn='new-hosts.txt'){
 			$data = $domain.'='.$b64.PHP_EOL;
 			$f = fopen($fn, 'a');
 			fwrite($f, $data);

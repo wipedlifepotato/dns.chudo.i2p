@@ -15,8 +15,9 @@
 		$addressbook = new addressbook_service();
 		$domains=$addressbook->getDomain("");
 		$hosts=array(
-			"http://stats.i2p/cgi-bin/newhosts.txt",//
-			"http://notbob.i2p/hosts.txt"
+		//	"http://stats.i2p/cgi-bin/newhosts.txt",//
+			"http://notbob.i2p/hosts.txt",
+			"http://reg.i2p/hosts.txt"
 		);
 
 		foreach($hosts as $host){

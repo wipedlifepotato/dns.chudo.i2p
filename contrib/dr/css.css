@@ -4,12 +4,8 @@ html, body {
 
 html {
   color: #ddf;
-  background-image: url(chudo.webp) ;
   background: linear-gradient(to bottom, rgba(24,0,24,.85), rgba(16,0,16,.9)), url(chudo.webp) center center no-repeat, #101;
   background-size: 100% 100%, cover;
-  background-position:center;
-  background-size:cover;
-  background-attachment:fixed;
 }
 body {
   margin: 5% 10% 48px;
@@ -63,24 +59,17 @@ legend {
   background: linear-gradient(to bottom, #435 50%, #324 50%);
 }
 footer {
-
   margin: -1px 2px 2px;
   padding: 5px;
-  position: fixed;
+  position: absolute;
   left: -2px;
   right: -2px;
-  bottom: -3px;
+  bottom: -2px;
   text-align: center;
   font-size: 80%;
   font-weight: 600;
   border-top: 1px solid #201;
-  background: rgba(16,0,8,1.0);
-  /*opacity:0.4;
-}
-footer:hover{
-	opacity:1.0;
-	  background: rgba(16,0,8,1.0);
-}*/
+  background: rgba(16,0,8,.3);
 }
 @media screen and (max-height: 600px) {
   body {

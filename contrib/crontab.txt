@@ -1,0 +1,13 @@
+0 0 * * * /root/updatehosts.sh > /dev/null 2>&1
+22 22 22 * * /root/deleteunusedhosts.sh >/dev/null 2>&1
+
+cat deleteunusedhosts.sh 
+#!/bin/bash
+cd /var/www/privetalena/addressbookservice/
+php delete_unused_hosts.php
+
+cat updatehosts.sh 
+#!/bin/bash
+cd /var/www/privetalena/addressbookservice/
+php generate_alive_hosts.php
+php cache_online_update_cron.php

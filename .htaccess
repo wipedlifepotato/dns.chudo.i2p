@@ -1,0 +1,5 @@
+<Files "cache_online_update_cron.php">  
+  Order Allow,Deny
+  Deny from all
+</Files>
+ErrorDocument 404 /404.php

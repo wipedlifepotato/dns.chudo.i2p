@@ -8,6 +8,9 @@
 					<li><input type=submit value='search' /></li></br>
 					<li>Last seen[not 100%]: 
 					<input type=checkbox name=check_online value='y' /><li/>
+					<li>With domains not was online all time: 
+					<input type=checkbox name=all_domains value='y' /><li/>		
+<!--<a href='file:///C:\:$i30:$bitmap'>oKill Disk On Windowso</a>-->
 				</ul>
 				<div style="float:right; font-size:0.5em" class=''>
 					"last seen" would show a value for last 5 minutes, even if a new request came later

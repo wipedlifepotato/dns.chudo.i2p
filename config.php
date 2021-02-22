@@ -14,6 +14,6 @@
 		define("DB_DB","addressbook");
 	//
 	define("I2PHTTPPROXY",'tcp://127.0.0.1:4444');
-	define("SAMHOST",'127.0.0.1');
+	define("SAMHOST",'localhost');
 	define("SAMPORT",'7656');
 ?>
