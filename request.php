@@ -1,5 +1,8 @@
 <?php include('templates/header.php');?>
 <?php
+$reserved_hosts = array("b32.i2p", "proxy.i2p",
+"router.i2p","console.i2p");
+
 function request(){
 		ini_set('display_errors', '1');
 		ini_set('display_startup_errors', '1');
@@ -65,9 +68,16 @@ function request(){
 
 		//add domain
 		if( isset_all($_GET, 'host','b64','desc') ){
+			global $reserved_hosts;
 			$host=$_GET['host'];
+			for ( $cn = 0; isset($host[$cn]); $cn++){
+				if($cn >=253) die("Is long name for domain");
+			}
 			$b64=$_GET['b64'];
 			$desc=$_GET['desc'];
+			foreach( $reserved_hosts as $rhost ){
+				if( strstr($host,$rhost) != false ) die("Is reserverd ($rhost) host. you can not to register it");
+			}
 			echo "<center><a href=index.php>back</a><br/>";
 			if(!$test->checkIsB64($b64))die("uncorrect b64");
 			$sam = new SAM(SAMHOST,SAMPORT);
